@@ -39,5 +39,5 @@ Develop a web-based application for managing events such as conferences, worksho
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/event-management-system.git
+[   git clone https://github.com/your-username/event-management-system.git](https://github.com/BONY-SL/Online-Event-Management-System.git)
    ```

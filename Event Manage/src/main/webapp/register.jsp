@@ -32,7 +32,7 @@
 <div class="container">
     <div class="registration-form">
         <h2 class="text-center mb-4">User Registration</h2>
-        <form action="${pageContext.request.contextPath}/register" method="post">
+        <form id="registerForm">
 
         <div class="mb-3">
                 <label for="name" class="form-label">Full Name</label>
@@ -67,6 +67,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/register.js"></script>
 </body>
 </html>
 

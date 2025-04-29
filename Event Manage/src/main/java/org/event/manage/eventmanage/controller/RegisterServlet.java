@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.event.manage.eventmanage.dto.RegisterRequest;
 import org.event.manage.eventmanage.exception.UserAlreadyExist;
+import org.event.manage.eventmanage.service.AuthService;
 import org.event.manage.eventmanage.service.impl.AuthServiceImpl;
 import org.event.manage.eventmanage.util.Response;
 
@@ -17,7 +18,7 @@ import java.io.IOException;
 @WebServlet(value = "/register")
 public class RegisterServlet extends HttpServlet {
 
-    private AuthServiceImpl authService;
+    private AuthService authService;
 
     @Override
     public void init() throws ServletException {
@@ -43,21 +44,17 @@ public class RegisterServlet extends HttpServlet {
             if (isRegistered) {
                 response.setCode(HttpServletResponse.SC_CREATED);
                 response.setMessage("User registered successfully...");
-                response.setData(registerRequest);
-                resp.setStatus(HttpServletResponse.SC_CREATED);
+                response.setData(null);
             }
         } catch (UserAlreadyExist e) {
             response.setCode(HttpServletResponse.SC_CONFLICT);
             response.setMessage(e.getMessage());
             response.setData(null);
-            resp.setStatus(HttpServletResponse.SC_CONFLICT);
         } catch (Exception e) {
             response.setCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             response.setMessage("Server error during registration");
             response.setData(null);
-            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-
         String jsonResponse = gson.toJson(response);
         resp.getWriter().write(jsonResponse);
     }

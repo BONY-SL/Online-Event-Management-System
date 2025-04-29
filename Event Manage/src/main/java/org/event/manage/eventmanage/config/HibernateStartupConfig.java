@@ -8,6 +8,7 @@ import org.event.manage.eventmanage.util.HibernateUtilService;
 @WebListener
 public class HibernateStartupConfig implements ServletContextListener {
 
+
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         System.out.println("Initializing Hibernate...");

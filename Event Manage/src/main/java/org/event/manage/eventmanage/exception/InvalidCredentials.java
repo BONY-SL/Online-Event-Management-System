@@ -1,15 +1,13 @@
 package org.event.manage.eventmanage.exception;
 
+import lombok.Getter;
 
-import lombok.Setter;
-
-
-@Setter
-public class UserNotFound extends RuntimeException{
+@Getter
+public class InvalidCredentials extends RuntimeException{
 
     private final String message;
 
-    public UserNotFound(String message) {
+    public InvalidCredentials(String message) {
         super(message);
         this.message = message;
     }

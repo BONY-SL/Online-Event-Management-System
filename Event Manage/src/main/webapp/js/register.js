@@ -24,14 +24,16 @@ document.getElementById("registerForm").addEventListener("submit", async functio
 
         const result = await response.json();
 
-        if (response.ok) {
+        if (result.code === 201) {
+            console.log(result.code);
             console.log(result.message);
-            console.error(result.data);
+            console.log(result.data);
 
             window.location.href = "/eventmanage_war_exploded/login.jsp";
         } else {
-            console.error(result.message);
-            alert(result.message);
+            console.log(result.code);
+            console.log(result.message);
+            console.log(result.data);
         }
     } catch (error) {
         console.error('Registration failed:', error);

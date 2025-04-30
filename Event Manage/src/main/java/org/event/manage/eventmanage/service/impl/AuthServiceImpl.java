@@ -18,12 +18,9 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public boolean register(RegisterRequest request) throws UserAlreadyExist{
-
-        Session session = HibernateUtilService.getSessionFactory().openSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
+    public boolean register(RegisterRequest request) throws UserAlreadyExist {
+        try (Session session = HibernateUtilService.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
 
             User existingUser = session.createQuery("FROM User WHERE email = :email", User.class)
                     .setParameter("email", request.getEmail())
@@ -41,19 +38,14 @@ public class AuthServiceImpl implements AuthService {
                     .role(request.getRole())
                     .phone(request.getPhone())
                     .build();
+
             session.save(user);
             transaction.commit();
             return true;
-
         } catch (UserAlreadyExist e) {
-            System.out.println(1);
-            if (transaction != null) transaction.rollback();
             throw e;
         } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            throw e;
-        }finally {
-            session.close();
+            throw new RuntimeException("Registration failed", e);
         }
     }
 

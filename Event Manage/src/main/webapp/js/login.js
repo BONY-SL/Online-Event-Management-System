@@ -19,17 +19,18 @@ document.getElementById("loginForm").addEventListener("submit", async function (
 
         const result = await response.json();
         console.log(result)
-        if (result.code === 200) {
-            console.log(result.message)
+        if (result.code === 200 && result.data.role) {
+            const userRole = result.data.role;
+            localStorage.setItem('userRole', userRole);
             if(result.data.role === "ADMIN"){
                 window.location.href = "/eventmanage_war_exploded/admin.jsp";
-
-            }else if(result.data.role === "USER"){
+            } else if(result.data.role === "USER"){
                 window.location.href = "/eventmanage_war_exploded/user.jsp";
             }
         } else {
-            console.log(result.message)
+            alert(result.message || "Unexpected response from server.");
         }
+
     } catch (error) {
         console.error('Login failed:', error);
         alert('Login failed. Please try again.');

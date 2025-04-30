@@ -34,6 +34,10 @@
             margin-left: 220px;
             padding: 20px;
         }
+        .card {
+            border-radius: 1rem;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -41,13 +45,13 @@
 <div class="sidebar">
     <h4 class="text-center text-white">Admin Dashboard</h4>
     <hr/>
-    <a href="#" data-url="admin-dash.jsp" onclick="loadContent(event)">📝 Dashboard</a>
-    <a href="#" data-url="add-event.jsp" onclick="loadContent(event)">➕ Add New Event</a>
-    <a href="#" data-url="manage-event.jsp" onclick="loadContent(event)">📝 Manage Events</a>
-    <a href="#" data-url="user-manage.jsp" onclick="loadContent(event)">👥 Registered Users</a>
-    <a href="#"  data-url="report.jsp" onclick="loadContent(event)">📊 Reports</a>
+    <a href="#" data-url="admin-dash.jsp" onclick="loadContent(event)">Dashboard</a>
+    <a href="#" data-url="add-event.jsp" onclick="loadContent(event)">Add New Event</a>
+    <a href="#" data-url="manage-event.jsp" onclick="loadContent(event)">Manage Events</a>
+    <a href="#" data-url="user-manage.jsp" onclick="loadContent(event)">Registered Users</a>
+    <a href="#"  data-url="report.jsp" onclick="loadContent(event)">Reports</a>
     <a href="${pageContext.request.contextPath}"
-       onclick="return confirmLogout();">🚪 Logout</a>
+       onclick="return confirmLogout();">Logout</a>
 
 </div>
 
@@ -75,6 +79,10 @@
             })
             .then(html => {
                 document.getElementById("content-area").innerHTML = html;
+
+                if (document.getElementById("eventForm")) {
+                    attachEventFormListener();
+                }
             })
             .catch(error => {
                 document.getElementById("content-area").innerHTML = "<p class='text-danger'>Failed to load content.</p>";
@@ -90,5 +98,6 @@
         loadContent("admin-dash.jsp");
     });
 </script>
+<script src="${pageContext.request.contextPath}/js/admin.js"></script>
 </body>
 </html>

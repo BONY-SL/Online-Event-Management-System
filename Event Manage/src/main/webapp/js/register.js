@@ -32,7 +32,7 @@ document.getElementById("registerForm").addEventListener("submit", async functio
             window.location.href = "/eventmanage_war_exploded/login.jsp";
         } else {
             console.log(result.code);
-            console.log(result.message);
+            alert(result.message);
             console.log(result.data);
         }
     } catch (error) {

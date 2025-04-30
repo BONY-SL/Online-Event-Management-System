@@ -43,7 +43,7 @@
                 <input type="password" class="form-control" name="password" id="password" required>
             </div>
 
-            <button type="submit" class="btn btn-dark w-100">Register</button>
+            <button type="submit" class="btn btn-dark w-100">Login</button>
         </form>
     </div>
 </div>

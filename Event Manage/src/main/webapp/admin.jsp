@@ -38,6 +38,97 @@
             border-radius: 1rem;
             margin-top: 20px;
         }
+        #customAlert {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            min-width: 250px;
+            z-index: 1050;
+            padding: 15px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+        }
+        .card2 {
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .card2-img-top {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card2-body {
+            padding: 20px;
+        }
+
+        .card2-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .card2-text {
+            width: 100%;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+        }
+
+        .card2-text th {
+            padding-right: 10px;
+            vertical-align: top;
+            color: #555;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .card2-text td {
+            color: #666;
+            word-break: break-word;
+        }
+
+        button.btn {
+            padding: 8px 16px;
+            font-size: 0.95rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        @media (max-width: 480px) {
+            .card2 {
+                margin: 10px;
+            }
+
+            .card2-body {
+                padding: 15px;
+            }
+        }
+        .alert-success { background-color: #28a745; }
+        .alert-error { background-color: #dc3545; }
+        .alert-warning { background-color: #ffc107; color: #212529; }
     </style>
 </head>
 <body>
@@ -47,7 +138,7 @@
     <hr/>
     <a href="#" data-url="admin-dash.jsp" onclick="loadContent(event)">Dashboard</a>
     <a href="#" data-url="add-event.jsp" onclick="loadContent(event)">Add New Event</a>
-    <a href="#" data-url="manage-event.jsp" onclick="loadContent(event)">Manage Events</a>
+    <a href="#" data-url="manage-event.jsp" onclick="loadContent(event),getAll()">Manage Events</a>
     <a href="#" data-url="user-manage.jsp" onclick="loadContent(event)">Registered Users</a>
     <a href="#"  data-url="report.jsp" onclick="loadContent(event)">Reports</a>
     <a href="${pageContext.request.contextPath}"

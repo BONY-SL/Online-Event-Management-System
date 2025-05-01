@@ -26,11 +26,104 @@ function attachEventFormListener() {
 
                 const result = await response.json();
                 console.log(result.code, result.message, result.data);
+                if(result.code === 201){
+                    console.log(result.code, result.message, result.data);
+                    showAlert("Event created successfully!", "success");
+                    document.getElementById("eventForm").reset();
+                }else {
+                    showAlert("Failed to create event: " + result.message, "warning");
+                }
             } catch (error) {
                 console.error("Registration failed:", error);
-                alert("Registration failed. Please try again.");
+                showAlert("Network error occurred. Please try again.", "danger");
             }
 
         });
     }
 }
+
+function showAlert(message, type , duration = 5000) {
+    const alertDiv = document.getElementById("customAlert");
+    alertDiv.className = `alert alert-${type}`;
+    alertDiv.textContent = message;
+    alertDiv.classList.remove("d-none");
+
+    setTimeout(() => {
+        alertDiv.classList.add("d-none");
+    }, duration);
+}
+
+function getAll(){
+
+    fetch('http://localhost:8080/eventmanage_war_exploded/admin?action=get-all')
+        .then(response => response.json())
+        .then(data => {
+            const events = data.data;
+            const container = document.getElementById('eventContainer');
+
+
+            container.innerHTML = '';
+
+            events.forEach(event => {
+                const col = document.createElement('div');
+                col.className = 'col-md-4';
+
+                col.innerHTML = `
+                    <div class="card2">
+                        <img src="${event.brochureFilePath}" class="card2-img-top event-image" alt="Event Brochure">
+                        <div class="card2-body">
+                            <h5 class="card2-title" style="text-align: center">${event.name}</h5>
+                                <table class="card2-text" border="0px">
+                                  <tr>
+                                    <th align="left">Date:</th>
+                                    <td>${event.date}</td>
+                                  </tr>
+                                  <tr>
+                                    <th align="left">Venue:</th>
+                                    <td>${event.venue}</td>
+                                  </tr>
+                                  <tr>
+                                    <th align="left">Capacity:</th>
+                                    <td>${event.capacity}</td>
+                                  </tr>
+                                  <tr>
+                                    <th align="left">Description:</th>
+                                    <td>${event.description}</td>
+                                  </tr>
+                                </table>
+                            <button class="btn btn-success me-2" onclick="updateEvent(${event.id})">Update</button>
+                            <button class="btn btn-danger" onclick="deleteEvent(${event.id})">Delete</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(col);
+            });
+        });
+
+}
+function updateEvent(id) {
+    alert('Update function for event ID: ' + id);
+}
+
+async function deleteEvent(id) {
+    if (confirm('Are you sure you want to delete this event?')) {
+        const requestOptions = {
+            method: "DELETE",
+            redirect: "follow"
+        };
+
+        try {
+            const response = await fetch(`http://localhost:8080/eventmanage_war_exploded/admin?id=${id}`, requestOptions);
+
+            const result = await response.json();
+
+            if (result.code === 201) {
+                location.reload();
+            }
+        } catch (error) {
+            console.error('Registration failed:', error);
+            alert('Registration failed. Please try again.');
+        }
+    }
+}
+

@@ -1,5 +1,6 @@
-package org.event.manage.eventmanage.controller;
+package org.event.manage.eventmanage.servlet;
 
+//import jakarta.annotation.security.RolesAllowed;
 //import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

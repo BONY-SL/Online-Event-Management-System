@@ -6,8 +6,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Event Management System</title>
-    <link rel="stylesheet" href="css/style.css">
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
@@ -16,6 +14,15 @@
         }
         .navbar {
             margin-bottom: 20px;
+        }
+        .jumbotron {
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+        .jumbotron h1,
+        .jumbotron p {
+            font-weight: bold;
         }
     </style>
 </head>
@@ -48,12 +55,6 @@
     </div>
 </nav>
 
-<div class="container">
-    <div class="jumbotron text-center">
-        <h1 class="display-4">Welcome to the Online Event Management System</h1>
-        <p class="lead">Manage and book your events easily. Join conferences, workshops, and meetups....</p>
-    </div>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>

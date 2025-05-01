@@ -1,8 +1,9 @@
-package org.event.manage.eventmanage.controller;
+package org.event.manage.eventmanage.servlet;
 import com.google.gson.Gson;
 //import jakarta.annotation.security.RolesAllowed;
 
 import com.google.gson.GsonBuilder;
+//import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -19,6 +20,7 @@ import org.event.manage.eventmanage.util.Response;
 import java.io.*;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.List;
 
 
 @WebServlet(value = "/admin/*")
@@ -104,5 +106,73 @@ public class AdminServlet extends HttpServlet {
         EventDTO savedEvent = adminService.addNewEvent(eventDTO);
         Response response = new Response(201, "Event Created", savedEvent);
         resp.getWriter().write(gson.toJson(response));
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+
+        String getAction = req.getParameter("action");
+
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .create();
+
+        Response response = new Response();
+
+        try {
+            if ("get-all".equals(getAction)) {
+
+                List<EventDTO> eventDTOList = adminService.getAllEvents();
+                System.out.println(eventDTOList);
+                response.setCode(HttpServletResponse.SC_OK);
+                response.setMessage("OK");
+                response.setData(eventDTOList);
+
+            } else {
+                response.setCode(HttpServletResponse.SC_BAD_REQUEST);
+                response.setMessage("Unknown Action");
+                resp.getWriter().write(gson.toJson(response));
+            }
+
+        } catch (Exception e) {
+            response.setCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.setMessage("Server Error: " + e.getMessage());
+            resp.getWriter().write(gson.toJson(response));
+        }
+        resp.getWriter().write(gson.toJson(response));
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        int getEventId = Integer.parseInt(req.getParameter("id"));
+
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+
+        Response response = new Response();
+        Gson gson = new Gson();
+
+        boolean isDeleted = adminService.deleteEventById(getEventId);
+
+        try {
+            if (isDeleted) {
+
+                List<EventDTO> eventDTOList = adminService.getAllEvents();
+                System.out.println(eventDTOList);
+                response.setCode(HttpServletResponse.SC_OK);
+                response.setMessage("OK");
+                response.setData(null);
+            }
+        } catch (Exception e) {
+            response.setCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.setMessage("Server Error: " + e.getMessage());
+            resp.getWriter().write(gson.toJson(response));
+        }
+        resp.getWriter().write(gson.toJson(response));
+
     }
 }

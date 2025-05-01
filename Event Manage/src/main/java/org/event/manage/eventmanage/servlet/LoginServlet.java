@@ -1,4 +1,4 @@
-package org.event.manage.eventmanage.controller;
+package org.event.manage.eventmanage.servlet;
 
 import com.google.gson.Gson;
 import jakarta.servlet.ServletConfig;

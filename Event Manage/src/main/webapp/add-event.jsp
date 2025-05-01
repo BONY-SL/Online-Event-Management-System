@@ -7,12 +7,12 @@
                     <h4 class="mb-0" style="text-align: center">Add New Event</h4>
                 </div>
                 <div class="card-body">
+                    <div id="customAlert" class="alert d-none" role="alert"></div>
                     <form id="eventForm" method="post" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="event-name" class="form-label">Event Name</label>
                             <input type="text" class="form-control" id="event-name" name="name" required>
                         </div>
-
                         <div class="mb-3">
                             <label for="event-date" class="form-label">Event Date</label>
                             <input type="date" class="form-control" id="event-date" name="date" required>

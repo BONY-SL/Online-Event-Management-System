@@ -15,6 +15,8 @@ function attachEventFormListener() {
             formData.append("capacity", document.getElementById("capacity-add").value);
             formData.append("description", document.getElementById("description-add").value);
             formData.append("brochureFilePath", document.getElementById("brochure-add").files[0]);
+            formData.append("latitude", document.getElementById("latitude").value);
+            formData.append("longitude", document.getElementById("longitude").value);
             formData.append("action", "add-event");
 
 
@@ -41,6 +43,9 @@ function attachEventFormListener() {
         });
     }
 }
+window.addEventListener("DOMContentLoaded", () => {
+    attachEventFormListener();
+});
 
 function showAlert(message, type , duration = 5000) {
     const alertDiv = document.getElementById("customAlert");
@@ -60,9 +65,6 @@ function getAll(){
         .then(data => {
             const events = data.data;
             const container = document.getElementById('eventContainer');
-
-
-            container.innerHTML = '';
 
             events.forEach(event => {
                 const col = document.createElement('div');
@@ -117,8 +119,9 @@ async function deleteEvent(id) {
 
             const result = await response.json();
 
-            if (result.code === 201) {
+            if (result.code === 200) {
                 location.reload();
+                console.log(result.code)
             }
         } catch (error) {
             console.error('Registration failed:', error);
@@ -126,4 +129,3 @@ async function deleteEvent(id) {
         }
     }
 }
-

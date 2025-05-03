@@ -26,6 +26,8 @@ public class AdminServiceImpl implements AdminService {
                     .description(eventDTO.getDescription())
                     .capacity(eventDTO.getCapacity())
                     .brochureFilePath(eventDTO.getBrochureFilePath())
+                    .latitude(eventDTO.getLatitude())
+                    .longitude(eventDTO.getLongitude())
                     .build();
 
             session.save(event);
@@ -61,6 +63,8 @@ public class AdminServiceImpl implements AdminService {
                             .description(event.getDescription())
                             .capacity(event.getCapacity())
                             .brochureFilePath(event.getBrochureFilePath())
+                            .latitude(event.getLatitude())
+                            .longitude(event.getLongitude())
                             .build()
                     ).collect(Collectors.toList());
 

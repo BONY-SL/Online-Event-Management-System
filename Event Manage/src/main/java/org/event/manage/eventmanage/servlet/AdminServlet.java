@@ -77,6 +77,9 @@ public class AdminServlet extends HttpServlet {
         String venue = req.getParameter("venue");
         String description = req.getParameter("description");
         int capacity = Integer.parseInt(req.getParameter("capacity"));
+        double latitude = Double.parseDouble(req.getParameter("latitude"));
+        double longitude = Double.parseDouble(req.getParameter("longitude"));
+
 
         LocalDate date = LocalDate.parse(dateStr);
 
@@ -101,6 +104,8 @@ public class AdminServlet extends HttpServlet {
                 .description(description)
                 .capacity(capacity)
                 .brochureFilePath("uploads/" + fileName)
+                .latitude(latitude)
+                .longitude(longitude)
                 .build();
 
         EventDTO savedEvent = adminService.addNewEvent(eventDTO);

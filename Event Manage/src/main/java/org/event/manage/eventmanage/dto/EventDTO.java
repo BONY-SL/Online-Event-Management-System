@@ -20,6 +20,9 @@ public class EventDTO {
     private int capacity;
     private String brochureFilePath;
     private String action;
+    private double latitude;
+    private double longitude;
+
 
     @Override
     public String toString() {
@@ -32,6 +35,8 @@ public class EventDTO {
                 ", capacity=" + capacity +
                 ", brochureFilePath='" + brochureFilePath + '\'' +
                 ", action='" + action + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
                 '}';
     }
 }

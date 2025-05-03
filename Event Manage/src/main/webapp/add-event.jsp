@@ -38,6 +38,9 @@
                             <input type="file" class="form-control" id="brochure-add" name="brochure" accept=".pdf,.jpg,.jpeg,.png">
                         </div>
 
+                        <input type="hidden" id="latitude" name="latitude">
+                        <input type="hidden" id="longitude" name="longitude">
+                        <div id="map"></div>
                         <button type="submit" class="btn btn-success w-100">Create Event</button>
                     </form>
                 </div>

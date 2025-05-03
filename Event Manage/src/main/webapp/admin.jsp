@@ -4,7 +4,6 @@
     <title>Admin Dashboard</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -129,6 +128,12 @@
         .alert-success { background-color: #28a745; }
         .alert-error { background-color: #dc3545; }
         .alert-warning { background-color: #ffc107; color: #212529; }
+
+        #map {
+            height: 400px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -173,6 +178,10 @@
 
                 if (document.getElementById("eventForm")) {
                     attachEventFormListener();
+                    // Only call initMap if #map exists
+                    if (document.getElementById("map") && typeof initMap === "function") {
+                        initMap();
+                    }
                 }
             })
             .catch(error => {
@@ -189,6 +198,42 @@
         loadContent("admin-dash.jsp");
     });
 </script>
-<script src="${pageContext.request.contextPath}/js/admin.js"></script>
+<script>
+    let map, marker;
+
+    function initMap() {
+        const defaultLocation = { lat: 6.9271, lng: 79.8612 }; // Colombo
+
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: defaultLocation,
+            zoom: 13
+        });
+
+        marker = new google.maps.Marker({
+            position: defaultLocation,
+            map: map,
+            draggable: true
+        });
+
+        // Set initial lat/lng values
+        updateLatLngInputs(marker.getPosition());
+
+        marker.addListener("dragend", () => {
+            updateLatLngInputs(marker.getPosition());
+        });
+
+        map.addListener("click", (e) => {
+            marker.setPosition(e.latLng);
+            updateLatLngInputs(e.latLng);
+        });
+    }
+
+    function updateLatLngInputs(position) {
+        document.getElementById("latitude").value = position.lat();
+        document.getElementById("longitude").value = position.lng();
+    }
+</script>
+<script src="${pageContext.request.contextPath}/js/admin.js" defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDs3kiKgPE3Et4jRhoDY-OPegAfSV_Q9vQ&callback=initMap" async defer></script>
 </body>
 </html>

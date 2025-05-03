@@ -36,5 +36,11 @@ public class Event {
     @Column(name = "brochure_path")
     private String brochureFilePath;
 
+    @Column(nullable = false)
+    private double latitude;
+
+    @Column(nullable = false)
+    private double longitude;
+
 
 }

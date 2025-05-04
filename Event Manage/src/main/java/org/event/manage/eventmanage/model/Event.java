@@ -50,7 +50,4 @@ public class Event {
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserBookEvent> bookings = new ArrayList<>();
 
-
-
-
 }

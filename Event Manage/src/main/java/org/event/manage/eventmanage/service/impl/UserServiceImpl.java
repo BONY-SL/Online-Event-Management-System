@@ -1,12 +1,9 @@
 package org.event.manage.eventmanage.service.impl;
 
-import jakarta.transaction.Transactional;
-import org.event.manage.eventmanage.dto.GetUserRole;
 import org.event.manage.eventmanage.dto.MyEventDTO;
 import org.event.manage.eventmanage.dto.UserBookEventDTO;
 import org.event.manage.eventmanage.exception.EventNotFound;
 import org.event.manage.eventmanage.exception.InsufficientTicketsException;
-import org.event.manage.eventmanage.exception.InvalidCredentials;
 import org.event.manage.eventmanage.exception.UserNotFound;
 import org.event.manage.eventmanage.model.Event;
 import org.event.manage.eventmanage.model.User;

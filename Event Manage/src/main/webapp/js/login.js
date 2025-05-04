@@ -30,11 +30,21 @@ document.getElementById("loginForm").addEventListener("submit", async function (
                 window.location.href = "/eventmanage_war_exploded/user.jsp";
             }
         } else {
-            alert(result.message || "Unexpected response from server.");
+            showAlert(result.message, "warning");
         }
 
     } catch (error) {
-        console.error('Login failed:', error);
-        alert('Login failed. Please try again.');
+        showAlert(error, "error");
     }
 });
+
+function showAlert(message, type , duration = 5000) {
+    const alertDiv = document.getElementById("customAlert");
+    alertDiv.className = `alert alert-${type}`;
+    alertDiv.textContent = message;
+    alertDiv.classList.remove("d-none");
+
+    setTimeout(() => {
+        alertDiv.classList.add("d-none");
+    }, duration);
+}

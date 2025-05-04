@@ -200,13 +200,13 @@
 <div class="sidebar">
     <h4 class="text-center text-white">Admin Dashboard</h4>
     <hr/>
-    <a href="#" data-url="admin-dash.jsp" onclick="loadContent(event)">Dashboard</a>
+    <a href="#" data-url="admin-dash.jsp" onclick="loadContent(event),loadDashboardCounts()">Dashboard</a>
     <a href="#" data-url="add-event.jsp" onclick="loadContent(event)">Add New Event</a>
     <a href="#" data-url="manage-event.jsp" onclick="loadContent(event),getAll()">Manage Events</a>
     <a href="#" data-url="user-manage.jsp" onclick="loadContent(event),getAllEventWithUsers()">Registered Users</a>
     <a href="#"  data-url="report.jsp" onclick="loadContent(event)">Reports</a>
     <a href="${pageContext.request.contextPath}"
-       onclick="return confirmLogout();">Logout</a>
+       onclick="return confirmLogout(event);">Logout</a>
 
 </div>
 
@@ -235,6 +235,11 @@
             .then(html => {
                 document.getElementById("content-area").innerHTML = html;
 
+
+                if (document.getElementById("chartContainer") && typeof renderDashboardChart === "function") {
+                    renderDashboardChart(); // Call your chart drawing function
+                }
+
                 if (document.getElementById("eventForm")) {
                     attachEventFormListener();
                     // Only call initMap if #map exists
@@ -249,9 +254,25 @@
             });
     }
 
-    function confirmLogout() {
-        return confirm("Are you sure you want to log out?");
+    function confirmLogout(event) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You will be logged out.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, log out!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = event.target.href;
+            }
+        });
     }
+
 
     document.addEventListener("DOMContentLoaded", function () {
         loadContent("admin-dash.jsp");
@@ -292,7 +313,11 @@
         document.getElementById("longitude").value = position.lng();
     }
 </script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 <script src="${pageContext.request.contextPath}/js/admin.js" defer></script>
+<script src="${pageContext.request.contextPath}/js/chart.js" defer></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDs3kiKgPE3Et4jRhoDY-OPegAfSV_Q9vQ&callback=initMap" async defer></script>
+
 </body>
 </html>

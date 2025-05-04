@@ -17,7 +17,7 @@ public class HibernateStartupConfig implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        //System.out.println("Shutting down Hibernate...");
-        //HibernateUtilService.shutdown();
+//        System.out.println("Shutting down Hibernate...");
+//        HibernateUtilService.shutdown();
     }
 }

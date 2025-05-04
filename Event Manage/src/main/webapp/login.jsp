@@ -24,9 +24,33 @@
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        @media (max-width: 480px) {
+            .card2 {
+                margin: 10px;
+            }
+
+            .card2-body {
+                padding: 15px;
+            }
+        }
+        .alert-success { background-color: #28a745; }
+        .alert-error { background-color: #dc3545; }
+        .alert-warning { background-color: #ffc107; color: #212529; }
     </style>
 </head>
 <body>
+<div id="customAlert" class="alert d-none" role="alert"></div>
 
 <div class="container">
     <div class="login-form">

@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import org.event.manage.eventmanage.dto.ChartEventDTO;
+import org.event.manage.eventmanage.dto.DashboardCountDTO;
 import org.event.manage.eventmanage.dto.EventDTO;
 import org.event.manage.eventmanage.dto.ListUserEventDTO;
 import org.event.manage.eventmanage.service.AdminService;
@@ -144,6 +146,20 @@ public class AdminServlet extends HttpServlet {
                 response.setCode(HttpServletResponse.SC_OK);
                 response.setMessage("OK");
                 response.setData(listUserEventDTOS);
+            } else if ("get-events-chart".equals(getAction)) {
+
+                List<ChartEventDTO> chartEventDTOS = adminService.getAllEventsForChart();
+                System.out.println(chartEventDTOS);
+                response.setCode(HttpServletResponse.SC_OK);
+                response.setMessage("OK");
+                response.setData(chartEventDTOS);
+
+            } else if ("get-dashboard-counts".equals(getAction)) {
+                DashboardCountDTO dashboardCountDTO = adminService.getDashBoardCounts();
+                System.out.println(dashboardCountDTO);
+                response.setCode(HttpServletResponse.SC_OK);
+                response.setMessage("OK");
+                response.setData(dashboardCountDTO);
             } else {
                 response.setCode(HttpServletResponse.SC_BAD_REQUEST);
                 response.setMessage("Unknown Action");

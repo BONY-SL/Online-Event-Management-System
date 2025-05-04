@@ -65,7 +65,6 @@ function updateEvent(event) {
         lng: parseFloat(event.longitude)
     };
 
-    // Initialize or update map
     if (!modalMap) {
         modalMap = new google.maps.Map(document.getElementById("eventMap"), {
             zoom: 14,
@@ -80,7 +79,6 @@ function updateEvent(event) {
         modalMarker.setPosition(position);
     }
 
-    // Show modal
     const eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
     eventModal.show();
 }

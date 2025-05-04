@@ -108,7 +108,17 @@ function updateEvent(id) {
 }
 
 async function deleteEvent(id) {
-    if (confirm('Are you sure you want to delete this event?')) {
+    const confirmResult = await Swal.fire({
+        title: 'Are you sure?',
+        text: "Do you really want to delete this event?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+    });
+
+    if (confirmResult.isConfirmed) {
         const requestOptions = {
             method: "DELETE",
             redirect: "follow"
@@ -116,19 +126,36 @@ async function deleteEvent(id) {
 
         try {
             const response = await fetch(`http://localhost:8080/eventmanage_war_exploded/admin?id=${id}`, requestOptions);
-
             const result = await response.json();
 
             if (result.code === 200) {
-                location.reload();
-                console.log(result.code)
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Deleted!',
+                    text: 'The event has been deleted.',
+                    timer: 1500,
+                    showConfirmButton: false
+                }).then(() => {
+                    location.reload();
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to delete the event.'
+                });
             }
         } catch (error) {
             console.error('Delete Error', error);
-            alert('Delete Error. Please try again.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Delete Error',
+                text: 'Something went wrong. Please try again.'
+            });
         }
     }
 }
+
 function getAllEventWithUsers() {
 
     fetch(`http://localhost:8080/eventmanage_war_exploded/admin?action=get-all-events-with-users`)
@@ -196,3 +223,25 @@ function getAllEventWithUsers() {
             console.error('Error fetching events:', error);
         });
 }
+
+function loadDashboardCounts() {
+    fetch('http://localhost:8080/eventmanage_war_exploded/admin?action=get-dashboard-counts')
+        .then(response => response.json())
+        .then(result => {
+            if (result.code === 200) {
+                const data = result.data;
+
+                document.getElementById("totalEventCountCard").textContent = data.totalCount;
+                document.getElementById("totalRegisteredUsersCard").textContent = data.totalRegisterdUsers;
+                document.getElementById("totalBookedTicketsCard").textContent = data.bookedTickets;
+                document.getElementById("totalUpcomingEventsCard").textContent = data.totalUpcommingEvents;
+            } else {
+                console.error("Failed to load dashboard data.");
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching dashboard data: ", error);
+        });
+}
+
+window.addEventListener('DOMContentLoaded', loadDashboardCounts);

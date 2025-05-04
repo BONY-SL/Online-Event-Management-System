@@ -28,15 +28,25 @@ document.getElementById("registerForm").addEventListener("submit", async functio
             console.log(result.code);
             console.log(result.message);
             console.log(result.data);
-
+            showAlert(result.message, "success");
             window.location.href = "/eventmanage_war_exploded/login.jsp";
         } else {
             console.log(result.code);
-            alert(result.message);
+            showAlert(result.message, "warning");
             console.log(result.data);
         }
     } catch (error) {
-        console.error('Registration failed:', error);
-        alert('Registration failed. Please try again.');
+        showAlert(error, "error");
     }
 });
+
+function showAlert(message, type , duration = 5000) {
+    const alertDiv = document.getElementById("customAlert");
+    alertDiv.className = `alert alert-${type}`;
+    alertDiv.textContent = message;
+    alertDiv.classList.remove("d-none");
+
+    setTimeout(() => {
+        alertDiv.classList.add("d-none");
+    }, duration);
+}

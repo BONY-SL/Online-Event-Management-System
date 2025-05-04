@@ -1,5 +1,7 @@
 package org.event.manage.eventmanage.service;
 
+import org.event.manage.eventmanage.dto.ChartEventDTO;
+import org.event.manage.eventmanage.dto.DashboardCountDTO;
 import org.event.manage.eventmanage.dto.EventDTO;
 import org.event.manage.eventmanage.dto.ListUserEventDTO;
 
@@ -14,4 +16,8 @@ public interface AdminService {
     boolean deleteEventById(int getEventId);
 
     List<ListUserEventDTO> getRegisterdUsersForEvent();
+
+    List<ChartEventDTO> getAllEventsForChart();
+
+    DashboardCountDTO getDashBoardCounts();
 }

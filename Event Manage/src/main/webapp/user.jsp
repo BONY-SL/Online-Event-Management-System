@@ -213,7 +213,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}"
-                       onclick="return confirmLogout();">LogOut</a>
+                       onclick="return confirmLogout(event);">LogOut</a>
                 </li>
             </ul>
         </div>
@@ -259,8 +259,23 @@
             });
     }
 
-    function confirmLogout() {
-        return confirm("Are you sure you want to log out?");
+    function confirmLogout(event) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You will be logged out.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, log out!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = event.target.href;
+            }
+        });
     }
     document.addEventListener("DOMContentLoaded", function () {
         loadContent("search-event.jsp");
@@ -285,5 +300,6 @@
     }
 </script>
 <script src="${pageContext.request.contextPath}/js/user.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDs3kiKgPE3Et4jRhoDY-OPegAfSV_Q9vQ&callback=initMap" async defer></script>
 </html>

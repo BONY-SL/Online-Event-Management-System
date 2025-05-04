@@ -47,6 +47,8 @@ public class LoginServlet extends HttpServlet {
             GetUserRole getRole = authService.login(loginRequest);
 
             if (getRole != null) {
+
+                getRole.setEmail(loginRequest.getEmail());
                 response.setCode(HttpServletResponse.SC_OK);
                 response.setMessage("Login successful");
                 response.setData(getRole);

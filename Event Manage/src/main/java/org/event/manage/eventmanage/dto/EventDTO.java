@@ -21,6 +21,7 @@ public class EventDTO {
     private String brochureFilePath;
     private String action;
     private double latitude;
+    private int availableTickets;
     private double longitude;
 
 

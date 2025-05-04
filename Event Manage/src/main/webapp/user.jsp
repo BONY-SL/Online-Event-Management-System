@@ -131,6 +131,67 @@
         .alert-success { background-color: #28a745; }
         .alert-error { background-color: #dc3545; }
         .alert-warning { background-color: #ffc107; color: #212529; }
+
+        .table-container {
+            max-width: 90%;
+            margin: 40px auto;
+            overflow-x: auto;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        thead {
+            background-color: #007bff;
+            color: white;
+        }
+
+        th, td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        @media screen and (max-width: 600px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            thead {
+                display: none;
+            }
+
+            td {
+                position: relative;
+                padding-left: 50%;
+                text-align: right;
+            }
+
+            td::before {
+                position: absolute;
+                top: 12px;
+                left: 16px;
+                width: 45%;
+                white-space: nowrap;
+                font-weight: bold;
+                text-align: left;
+            }
+
+            td:nth-of-type(1)::before { content: "Event Name"; }
+            td:nth-of-type(2)::before { content: "Date"; }
+            td:nth-of-type(3)::before { content: "Venue"; }
+            td:nth-of-type(4)::before { content: "Tickets Booked"; }
+        }
     </style>
 </head>
 
@@ -148,7 +209,7 @@
                     <a class="nav-link"  data-url="search-event.jsp" href="#" onclick="loadContent(event),getAll()">Search Event</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"  data-url="view-my-book.jsp" href="#" onclick="loadContent(event)">View Booking History</a>
+                    <a class="nav-link"  data-url="view-my-book.jsp" href="#" onclick="loadContent(event),getAllMyBooks()">View Booking History</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}"

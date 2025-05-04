@@ -4,6 +4,9 @@ package org.event.manage.eventmanage.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -30,6 +33,8 @@ public class User {
 
     private String phone;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserBookEvent> bookings = new ArrayList<>();
 
     @Override
     public String toString() {

@@ -124,8 +124,75 @@ async function deleteEvent(id) {
                 console.log(result.code)
             }
         } catch (error) {
-            console.error('Registration failed:', error);
-            alert('Registration failed. Please try again.');
+            console.error('Delete Error', error);
+            alert('Delete Error. Please try again.');
         }
     }
+}
+function getAllEventWithUsers() {
+
+    fetch(`http://localhost:8080/eventmanage_war_exploded/admin?action=get-all-events-with-users`)
+        .then(response => response.json())
+        .then(data => {
+            const events = data.data;
+            const tableBody = document.getElementById('eventsTableBody2');
+            tableBody.innerHTML = ''; // Clear existing rows if any
+
+            events.forEach(event => {
+                const row = document.createElement('tr');
+
+                const nameCell = document.createElement('td');
+                nameCell.textContent = event.eventName;
+
+                const dateCell = document.createElement('td');
+                dateCell.textContent = event.date;
+
+                const venueCell = document.createElement('td');
+                venueCell.textContent = event.venue;
+
+                const capacityCell = document.createElement('td');
+                capacityCell.textContent = event.capacity;
+
+                const userCount = document.createElement('td');
+                userCount.textContent = event.totalRegisteredUsers;
+
+                const showUsers = document.createElement('td');
+                const btn = document.createElement('button');
+                btn.textContent = 'Show Users';
+                btn.className = 'btn btn-dark btn-sm';
+                btn.setAttribute('data-bs-toggle', 'modal');
+                btn.setAttribute('data-bs-target', '#userModal');
+
+                btn.addEventListener('click', () => {
+                    const userList = event.userDTOList;
+                    const modalBody = document.getElementById('modalUserList');
+                    modalBody.innerHTML = '';
+
+                    if (userList.length === 0) {
+                        modalBody.innerHTML = '<p>No users registered.</p>';
+                    } else {
+                        const ul = document.createElement('ul');
+                        userList.forEach(user => {
+                            const li = document.createElement('li');
+                            li.textContent = `${user.name} (${user.email})`;
+                            ul.appendChild(li);
+                        });
+                        modalBody.appendChild(ul);
+                    }
+                });
+
+                showUsers.appendChild(btn);
+
+                row.appendChild(nameCell);
+                row.appendChild(dateCell);
+                row.appendChild(venueCell);
+                row.appendChild(capacityCell);
+                row.appendChild(userCount);
+                row.appendChild(showUsers);
+                tableBody.appendChild(row);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching events:', error);
+        });
 }

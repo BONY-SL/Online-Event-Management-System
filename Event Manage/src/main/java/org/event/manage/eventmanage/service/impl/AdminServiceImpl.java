@@ -1,12 +1,17 @@
 package org.event.manage.eventmanage.service.impl;
 
 import org.event.manage.eventmanage.dto.EventDTO;
+import org.event.manage.eventmanage.dto.ListUserEventDTO;
+import org.event.manage.eventmanage.dto.UserDTO;
 import org.event.manage.eventmanage.model.Event;
+import org.event.manage.eventmanage.model.UserBookEvent;
 import org.event.manage.eventmanage.service.AdminService;
 import org.event.manage.eventmanage.util.HibernateUtilService;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +33,7 @@ public class AdminServiceImpl implements AdminService {
                     .brochureFilePath(eventDTO.getBrochureFilePath())
                     .latitude(eventDTO.getLatitude())
                     .longitude(eventDTO.getLongitude())
+                    .availableTickets(eventDTO.getAvailableTickets())
                     .build();
 
             session.save(event);
@@ -65,6 +71,7 @@ public class AdminServiceImpl implements AdminService {
                             .brochureFilePath(event.getBrochureFilePath())
                             .latitude(event.getLatitude())
                             .longitude(event.getLongitude())
+                            .availableTickets(event.getAvailableTickets())
                             .build()
                     ).collect(Collectors.toList());
 
@@ -94,4 +101,40 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    @Override
+    public List<ListUserEventDTO> getRegisterdUsersForEvent() {
+
+        List<ListUserEventDTO> listUserEventDTOS = new ArrayList<>();
+        try (Session session = HibernateUtilService.getSessionFactory().openSession()){
+
+            Transaction transaction = session.beginTransaction();
+
+            String getData = "SELECT DISTINCT e FROM Event e JOIN FETCH e.bookings b JOIN FETCH b.user";
+            List<Event> eventList = session.createQuery(getData, Event.class).getResultList();
+
+            for (Event event : eventList){
+                List<UserDTO> userDTOList = event.getBookings().stream()
+                        .map(b-> UserDTO.builder()
+                                .name(b.getUser().getName())
+                                .email(b.getUser().getEmail())
+                                .build())
+                        .collect(Collectors.toList());
+                ListUserEventDTO dto = ListUserEventDTO.builder()
+                        .eventId(event.getId())
+                        .eventName(event.getName())
+                        .date(event.getDate())
+                        .venue(event.getVenue())
+                        .capacity(event.getCapacity())
+                        .userDTOList(userDTOList)
+                        .totalRegisteredUsers(userDTOList.size())
+                        .build();
+
+                listUserEventDTOS.add(dto);
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listUserEventDTOS;
+    }
 }

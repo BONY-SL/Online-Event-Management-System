@@ -7,6 +7,7 @@
 <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content rounded-4 shadow">
+            <div id="customAlert" class="alert d-none" role="alert"></div>
             <div class="modal-header bg-dark text-white">
                 <h5 class="modal-title" id="eventModalLabel">Event Details</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -22,7 +23,15 @@
                     <p><strong>Capacity:</strong> <span id="modalEventCapacity"></span></p>
                     <p><strong>Description:</strong></p>
                     <p id="modalEventDescription"></p>
-                    <button class="btn btn-primary me-2">Book Event</button>
+                    <p><strong>Available Tickets:</strong></p>
+                    <p id="availableTickets"></p>
+                    <form id="bookEventForm">
+                        <div class="mb-3">
+                            <label for="book-space" class="form-label">Ticket Count :</label>
+                            <input type="number" class="form-control" name="book-space" id="book-space" required>
+                        </div>
+                        <button type="button" class="btn btn-primary me-2" onclick="bookEvent()">Book Event</button>
+                    </form>
                 </div>
             </div>
         </div>

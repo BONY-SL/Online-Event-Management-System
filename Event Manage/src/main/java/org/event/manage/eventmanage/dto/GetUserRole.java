@@ -10,6 +10,7 @@ import lombok.*;
 public class GetUserRole {
 
     private String role;
+    private String email;
 
     @Override
     public String toString() {

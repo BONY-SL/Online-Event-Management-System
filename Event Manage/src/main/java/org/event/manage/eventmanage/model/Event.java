@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "events")
@@ -41,6 +43,14 @@ public class Event {
 
     @Column(nullable = false)
     private double longitude;
+
+    @Column(nullable = false ,name = "avalable_count")
+    private int availableTickets;
+
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserBookEvent> bookings = new ArrayList<>();
+
+
 
 
 }

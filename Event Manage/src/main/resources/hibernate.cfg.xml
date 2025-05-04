@@ -20,5 +20,6 @@
         <!-- Mapped Entity Classes -->
         <mapping class="org.event.manage.eventmanage.model.User" />
         <mapping class="org.event.manage.eventmanage.model.Event" />
+        <mapping class="org.event.manage.eventmanage.model.UserBookEvent" />
     </session-factory>
 </hibernate-configuration>

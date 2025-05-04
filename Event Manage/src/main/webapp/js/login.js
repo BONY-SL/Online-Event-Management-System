@@ -21,7 +21,9 @@ document.getElementById("loginForm").addEventListener("submit", async function (
         console.log(result)
         if (result.code === 200 && result.data.role) {
             const userRole = result.data.role;
+            const email = result.data.email;
             localStorage.setItem('userRole', userRole);
+            localStorage.setItem('userEmail',email);
             if(result.data.role === "ADMIN"){
                 window.location.href = "/eventmanage_war_exploded/admin.jsp";
             } else if(result.data.role === "USER"){

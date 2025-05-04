@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import org.event.manage.eventmanage.dto.EventDTO;
+import org.event.manage.eventmanage.dto.ListUserEventDTO;
 import org.event.manage.eventmanage.service.AdminService;
 import org.event.manage.eventmanage.service.impl.AdminServiceImpl;
 import org.event.manage.eventmanage.util.LocalDateAdapter;
@@ -106,6 +107,7 @@ public class AdminServlet extends HttpServlet {
                 .brochureFilePath("uploads/" + fileName)
                 .latitude(latitude)
                 .longitude(longitude)
+                .availableTickets(capacity)
                 .build();
 
         EventDTO savedEvent = adminService.addNewEvent(eventDTO);
@@ -136,6 +138,12 @@ public class AdminServlet extends HttpServlet {
                 response.setMessage("OK");
                 response.setData(eventDTOList);
 
+            } else if ("get-all-events-with-users".equals(getAction)) {
+                List<ListUserEventDTO> listUserEventDTOS = adminService.getRegisterdUsersForEvent();
+                System.out.println(listUserEventDTOS);
+                response.setCode(HttpServletResponse.SC_OK);
+                response.setMessage("OK");
+                response.setData(listUserEventDTOS);
             } else {
                 response.setCode(HttpServletResponse.SC_BAD_REQUEST);
                 response.setMessage("Unknown Action");

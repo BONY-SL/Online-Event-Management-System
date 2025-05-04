@@ -317,7 +317,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 <script src="${pageContext.request.contextPath}/js/admin.js" defer></script>
 <script src="${pageContext.request.contextPath}/js/chart.js" defer></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDs3kiKgPE3Et4jRhoDY-OPegAfSV_Q9vQ&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&callback=initMap" async defer></script>
 
 </body>
 </html>

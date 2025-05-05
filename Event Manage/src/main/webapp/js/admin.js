@@ -243,5 +243,138 @@ function loadDashboardCounts() {
             console.error("Error fetching dashboard data: ", error);
         });
 }
+function showReport(type) {
+    document.getElementById('attendanceReport').classList.add('d-none');
+    document.getElementById('popularReport').classList.add('d-none');
+
+    if (type === 'attendance') {
+        document.getElementById('attendanceReport').classList.remove('d-none');
+        loadAttendanceReport();
+    } else if (type === 'popular') {
+        document.getElementById('popularReport').classList.remove('d-none');
+        loadPopularEventsReport();
+    }
+}
+
+function printReport(reportId) {
+    const content = document.getElementById(reportId).innerHTML;
+
+    const printWindow = window.open('', '', 'height=600,width=800');
+    printWindow.document.write(`
+        <html>
+        <head>
+            <title>Print Report</title>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                }
+
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+
+                th, td {
+                    border: 1px solid #000;
+                    padding: 8px;
+                }
+
+                th {
+                    background-color: #007bff;
+                    color: #000000;
+                }
+
+                h3 {
+                    margin-top: 0;
+                    text-align: center;
+                }
+
+                .report-section {
+                    padding: 20px;
+                    border: 1px solid #0b53af;
+                    border-radius: 10px;
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                }
+
+                .container {
+                    width: 100%;
+                    padding: 0;
+                }
+
+                .btn-secondary {
+                    display: none; /* Hide the print button in the printed report */
+                }
+            </style>
+        </head>
+        <body>
+            ${content}
+        </body>
+        </html>
+    `);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+}
+
+
+
+function loadAttendanceReport() {
+    fetch('http://localhost:8080/eventmanage_war_exploded/admin?action=reports')
+        .then(res => res.json())
+        .then(result => {
+            const tbody = document.getElementById("attendanceTableBody");
+            tbody.innerHTML = '';
+
+            result.data.forEach(event => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${event.name}</td>
+                        <td>${event.date}</td>
+                        <td>${event.venue}</td>
+                        <td>${event.capacity}</td>
+                        <td>${event.registerdUsers}</td>
+                        <td>${event.totalAttendance}</td>
+                    </tr>
+                `;
+            });
+        })
+        .catch(err => {
+            console.error("Error loading detailed report", err);
+        });
+}
+
+
+function loadPopularEventsReport() {
+    fetch('http://localhost:8080/eventmanage_war_exploded/admin?action=reports')
+        .then(res => res.json())
+        .then(result => {
+            const tbody = document.getElementById("popularTableBody");
+            tbody.innerHTML = '';
+
+            // Filter and sort data
+            const filtered = result.data
+                .filter(e => e.registerdUsers > 0 && e.totalAttendance > 0)
+                .sort((a, b) => b.totalAttendance - a.totalAttendance);
+
+            // Render rows
+            filtered.forEach(event => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${event.name}</td>
+                        <td>${event.date}</td>
+                        <td>${event.venue}</td>
+                        <td>${event.totalAttendance}</td>
+                    </tr>
+                `;
+            });
+        })
+        .catch(err => {
+            console.error("Error loading popular events report", err);
+        });
+}
+
 
 window.addEventListener('DOMContentLoaded', loadDashboardCounts);
+

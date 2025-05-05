@@ -2,6 +2,7 @@ package org.event.manage.eventmanage.service.impl;
 
 import org.event.manage.eventmanage.dto.*;
 import org.event.manage.eventmanage.model.Event;
+import org.event.manage.eventmanage.model.UserBookEvent;
 import org.event.manage.eventmanage.service.AdminService;
 import org.event.manage.eventmanage.util.HibernateUtilService;
 import org.hibernate.Session;
@@ -200,4 +201,40 @@ public class AdminServiceImpl implements AdminService {
         }
         return dto;
     }
+
+    @Override
+    public List<EventReportDTO> getReports() {
+        List<EventReportDTO> reportList = new ArrayList<>();
+
+        try (Session session = HibernateUtilService.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            List<Event> events = session.createQuery("FROM Event", Event.class).list();
+
+            for (Event event : events) {
+                int registeredUsers = event.getBookings().size();
+                int totalAttendance = event.getBookings().stream()
+                        .mapToInt(UserBookEvent::getTicketsCount)
+                        .sum();
+
+                EventReportDTO reportDTO = EventReportDTO.builder()
+                        .name(event.getName())
+                        .date(event.getDate())
+                        .venue(event.getVenue())
+                        .capacity(event.getCapacity())
+                        .registerdUsers(registeredUsers)
+                        .totalAttendance(totalAttendance)
+                        .build();
+
+                reportList.add(reportDTO);
+            }
+
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return reportList;
+    }
+
 }

@@ -11,10 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
-import org.event.manage.eventmanage.dto.ChartEventDTO;
-import org.event.manage.eventmanage.dto.DashboardCountDTO;
-import org.event.manage.eventmanage.dto.EventDTO;
-import org.event.manage.eventmanage.dto.ListUserEventDTO;
+import org.event.manage.eventmanage.dto.*;
 import org.event.manage.eventmanage.service.AdminService;
 import org.event.manage.eventmanage.service.impl.AdminServiceImpl;
 import org.event.manage.eventmanage.util.LocalDateAdapter;
@@ -160,6 +157,14 @@ public class AdminServlet extends HttpServlet {
                 response.setCode(HttpServletResponse.SC_OK);
                 response.setMessage("OK");
                 response.setData(dashboardCountDTO);
+            } else if ("reports".equals(getAction)) {
+
+                List<EventReportDTO> eventReportDTOList = adminService.getReports();
+                System.out.println(eventReportDTOList);
+                response.setCode(HttpServletResponse.SC_OK);
+                response.setMessage("OK");
+                response.setData(eventReportDTOList);
+
             } else {
                 response.setCode(HttpServletResponse.SC_BAD_REQUEST);
                 response.setMessage("Unknown Action");
@@ -202,6 +207,5 @@ public class AdminServlet extends HttpServlet {
             resp.getWriter().write(gson.toJson(response));
         }
         resp.getWriter().write(gson.toJson(response));
-
     }
 }

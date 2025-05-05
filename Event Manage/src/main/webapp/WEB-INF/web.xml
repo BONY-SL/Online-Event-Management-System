@@ -25,9 +25,13 @@
 <!--    </security-constraint>-->
 
 <!--    <login-config>-->
-<!--        <auth-method>BASIC</auth-method>-->
-<!--        <realm-name>EventManageRealm</realm-name>-->
+<!--        <auth-method>FORM</auth-method>-->
+<!--        <form-login-config>-->
+<!--            <form-login-page>/login.jsp</form-login-page>-->
+<!--            <form-error-page>/login-error.jsp</form-error-page>-->
+<!--        </form-login-config>-->
 <!--    </login-config>-->
+
 
 <!--    <security-role>-->
 <!--        <role-name>ADMIN</role-name>-->

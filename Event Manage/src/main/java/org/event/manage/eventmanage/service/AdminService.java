@@ -1,9 +1,6 @@
 package org.event.manage.eventmanage.service;
 
-import org.event.manage.eventmanage.dto.ChartEventDTO;
-import org.event.manage.eventmanage.dto.DashboardCountDTO;
-import org.event.manage.eventmanage.dto.EventDTO;
-import org.event.manage.eventmanage.dto.ListUserEventDTO;
+import org.event.manage.eventmanage.dto.*;
 
 import java.util.List;
 
@@ -20,4 +17,6 @@ public interface AdminService {
     List<ChartEventDTO> getAllEventsForChart();
 
     DashboardCountDTO getDashBoardCounts();
+
+    List<EventReportDTO> getReports();
 }

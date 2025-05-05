@@ -193,6 +193,12 @@
             td:nth-of-type(2)::before { content: "Date"; }
             td:nth-of-type(3)::before { content: "Venue"; }
             td:nth-of-type(4)::before { content: "Tickets Booked"; }}
+        .report-section {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -245,6 +251,17 @@
                     // Only call initMap if #map exists
                     if (document.getElementById("map") && typeof initMap === "function") {
                         initMap();
+                    }
+                }
+                if (typeof showReport === "function") {
+                    const attendanceBtn = document.querySelector('[onclick="showReport(\'attendance\')"]');
+                    const popularBtn = document.querySelector('[onclick="showReport(\'popular\')"]');
+
+                    if (attendanceBtn) {
+                        attendanceBtn.addEventListener("click", () => showReport('attendance'));
+                    }
+                    if (popularBtn) {
+                        popularBtn.addEventListener("click", () => showReport('popular'));
                     }
                 }
             })
@@ -317,7 +334,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 <script src="${pageContext.request.contextPath}/js/admin.js" defer></script>
 <script src="${pageContext.request.contextPath}/js/chart.js" defer></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&callback=initMap" async defer></script>
-
+<script src="https://maps.googleapis.com/maps/api/js?key=xxx&callback=initMap" async defer></script>
 </body>
 </html>

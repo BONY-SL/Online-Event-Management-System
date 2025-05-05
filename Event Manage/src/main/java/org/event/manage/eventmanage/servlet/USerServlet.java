@@ -1,7 +1,6 @@
 package org.event.manage.eventmanage.servlet;
 
 //import jakarta.annotation.security.RolesAllowed;
-//import jakarta.annotation.security.RolesAllowed;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import jakarta.servlet.ServletException;

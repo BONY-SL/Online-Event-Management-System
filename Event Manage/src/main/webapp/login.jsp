@@ -55,7 +55,7 @@
 <div class="container">
     <div class="login-form">
         <h2 class="text-center mb-4">User Login</h2>
-        <form id="loginForm">
+        <form id="loginForm" action="j_security_check">
 
             <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
